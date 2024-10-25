@@ -1,6 +1,3 @@
-Aqui está um exemplo de um arquivo `README.md` para documentar o seu projeto CRUD de livros em Golang:
-
-```markdown
 # CRUD de Livros com Gin e MySQL
 
 Este é um projeto de CRUD de livros desenvolvido em Golang, utilizando o framework **Gin** para manipulação de rotas e **MySQL** para armazenamento de dados. O projeto segue a arquitetura MVC (Model-View-Controller) para organização de código.
@@ -16,7 +13,7 @@ crud-livros
 ├── config/
 │   └── db.go                     # Configuração do banco de dados
 └── main.go                       # Configuração do servidor e rotas principais
-```
+
 
 ## Pré-requisitos
 
@@ -27,8 +24,8 @@ crud-livros
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/seuusuario/crud-livros.git
-   cd crud-livros
+   git clone https://github.com/williamsilvacastro/gobooks
+   cd gobooks
    ```
 
 2. Inicialize o módulo Go:
