@@ -1,19 +1,21 @@
-# CRUD de Livros com Gin e MySQL
 
-Este é um projeto de CRUD de livros desenvolvido em Golang, utilizando o framework **Gin** para manipulação de rotas e **MySQL** para armazenamento de dados. O projeto segue a arquitetura MVC (Model-View-Controller) para organização de código.
+Este é um projeto de CRUD de livros desenvolvido em Golang, utilizando o framework **Gin** para manipulação de rotas e **MySQL** para armazenamento de dados. O projeto segue a arquitetura MVC (Model-View-Controller) para organização de código e está configurado para ser executado em AWS Lambda.
 
 ## Estrutura do Projeto
 
 ```bash
 crud-livros
+├── build/
+│   └── main       # Arquivo Executavel Para Lambda
 ├── controllers/
-│   └── livro_controller.go       # Controladores das rotas de livros
+│   └── routes.go       # Controladores das rotas de livros
+│   └── livro_controller.go       # Controladores de livros
 ├── models/
 │   └── livro.go                  # Modelo do Livro e funções CRUD
 ├── config/
 │   └── db.go                     # Configuração do banco de dados
-└── main.go                       # Configuração do servidor e rotas principais
-
+└── main.go              # Configuração do servidor e rotas principais                      
+```
 
 ## Pré-requisitos
 
@@ -37,71 +39,17 @@ crud-livros
    ```bash
    go get -u github.com/gin-gonic/gin
    go get -u github.com/go-sql-driver/mysql
+   go get -u github.com/awslabs/aws-lambda-go-api-proxy/gin
    ```
 
-4. Configure o banco de dados MySQL:
-   - Conecte-se ao MySQL e crie o banco de dados e a tabela com o seguinte comando:
+## Compilação do arquivo executavel para AWS Lambda
 
-     ```sql
-     CREATE DATABASE biblioteca;
+1. Compile o projeto para Linux:
+   ```bash
+   GOOS=linux GOARCH=amd64 go build -o build/main main.go
+   ```
 
-     USE biblioteca;
-
-     CREATE TABLE livros (
-         id INT AUTO_INCREMENT PRIMARY KEY,
-         titulo VARCHAR(100),
-         autor VARCHAR(100),
-         descricao TEXT
-     );
-     ```
-
-5. Atualize a configuração do banco de dados em `config/db.go` com suas credenciais MySQL.
-
-## Executando o Projeto
-
-Para iniciar o servidor, execute o comando:
-
-```bash
-go run main.go
-```
-
-O servidor estará disponível na porta **8080**.
-
-## Endpoints
-
-Aqui estão os endpoints disponíveis para o CRUD de livros:
-
-### 1. Listar todos os livros
-   - **Rota**: `GET /livros`
-   - **Descrição**: Retorna uma lista de todos os livros cadastrados.
-
-### 2. Criar um novo livro
-   - **Rota**: `POST /livros`
-   - **Descrição**: Adiciona um novo livro ao banco de dados.
-   - **Exemplo de Body JSON**:
-     ```json
-     {
-       "titulo": "Livro 1",
-       "autor": "Autor 1",
-       "descricao": "Descrição do livro"
-     }
-     ```
-
-### 3. Atualizar um livro
-   - **Rota**: `PUT /livros/:id`
-   - **Descrição**: Atualiza os dados de um livro específico.
-   - **Exemplo de Body JSON**:
-     ```json
-     {
-       "titulo": "Livro Atualizado",
-       "autor": "Autor Atualizado",
-       "descricao": "Nova descrição"
-     }
-     ```
-
-### 4. Deletar um livro
-   - **Rota**: `DELETE /livros/:id`
-   - **Descrição**: Remove um livro específico do banco de dados.
+2. Faça o upload do arquivo `main` para o AWS Lambda e configure o handler como `main`.
 
 ## Testando com `curl`
 
@@ -109,25 +57,24 @@ Você pode testar os endpoints usando `curl` ou uma ferramenta como Postman.
 
 #### 1. Listar todos os livros
 ```bash
-curl http://localhost:8080/livros
+curl https://<your-api-gateway-endpoint>/livros
 ```
 
 #### 2. Criar um novo livro
 ```bash
-curl -X POST http://localhost:8080/livros -d '{"titulo":"Livro Exemplo", "autor":"Autor Exemplo", "descricao":"Descrição exemplo"}' -H "Content-Type: application/json"
+curl -X POST https://<your-api-gateway-endpoint>/livros -d '{"titulo":"Livro Exemplo", "autor":"Autor Exemplo", "descricao":"Descrição exemplo"}' -H "Content-Type: application/json"
 ```
 
 #### 3. Atualizar um livro
 ```bash
-curl -X PUT http://localhost:8080/livros/1 -d '{"titulo":"Livro Atualizado", "autor":"Autor Atualizado", "descricao":"Nova descrição"}' -H "Content-Type: application/json"
+curl -X PUT https://<your-api-gateway-endpoint>/livros/1 -d '{"titulo":"Livro Atualizado", "autor":"Autor Atualizado", "descricao":"Nova descrição"}' -H "Content-Type: application/json"
 ```
 
 #### 4. Deletar um livro
 ```bash
-curl -X DELETE http://localhost:8080/livros/1
+curl -X DELETE https://<your-api-gateway-endpoint>/livros/1
 ```
 
 ## Contribuição
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou um pull request.
-

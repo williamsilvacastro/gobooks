@@ -1,24 +1,36 @@
 package main
 
 import (
-    "crud-livros/config"
-    "crud-livros/controllers"
-    "github.com/gin-gonic/gin"
+	"context"
+	"crud-livros/config"
+	"crud-livros/controllers"
+
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
+	ginAdapter "github.com/awslabs/aws-lambda-go-api-proxy/gin" // Importando o adaptador
+	"github.com/gin-gonic/gin"
 )
 
+var ginLambda *ginAdapter.GinLambda
+
+func init() {
+	// Configurações de conexão com o banco
+	config.Connect()
+
+	// Configurações do Gin
+	r := gin.Default()
+	controllers.RegisterRoutes(r) // Registrar as rotas
+
+	// Inicializa o adaptador Gin para Lambda
+	ginLambda = ginAdapter.New(r)
+}
+
+func Handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	// If no name is provided in the HTTP request body, throw an error
+	return ginLambda.ProxyWithContext(ctx, req)
+}
+
 func main() {
-    // Conectar ao banco de dados
-    config.Connect()
-
-    // Inicializar o router do Gin
-    router := gin.Default()
-
-    // Definir rotas
-    router.GET("/livros", controllers.GetLivros)
-    router.POST("/livros", controllers.CreateLivro)
-    router.PUT("/livros/:id", controllers.UpdateLivro)
-    router.DELETE("/livros/:id", controllers.DeleteLivro)
-
-    // Iniciar o servidor na porta 8080
-    router.Run(":8080")
+	// Inicia o Lambda em vez do servidor HTTP tradicional
+	lambda.Start(Handler)
 }
