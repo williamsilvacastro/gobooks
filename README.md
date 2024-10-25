@@ -78,3 +78,64 @@ curl -X DELETE https://<your-api-gateway-endpoint>/livros/1
 ## Contribuição
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou um pull request.
+
+
+## TO DO
+
+1.  Melhorar resiliencia 
+
+2.  Variaveis de ambiente para conexao com banco
+
+3.  Validacao se tabela de livros existe no banco
+
+4.  Criar banco RDS para este projeto
+
+5.  Melhorar tratamento de erro e response http status que estamos usando
+
+6.  Fazer um CICD Simplificado
+
+
+## Sugestao GITHUB Copilot:
+
+1.  Tratamento de Erros e Respostas HTTP:
+Melhore o tratamento de erros e as respostas HTTP para fornecer mensagens mais detalhadas e específicas.
+Utilize middlewares para capturar e tratar erros de forma centralizada.
+
+2.  Validação de Dados:
+Adicione validações mais robustas para os dados de entrada usando bibliotecas como go-playground/validator.
+
+3.  Autenticação e Autorização:
+Implemente autenticação e autorização para proteger as rotas da API.
+Considere o uso de JWT (JSON Web Tokens) para autenticação.
+
+4.  Documentação da API:
+Utilize ferramentas como Swagger para documentar a API.
+Forneça exemplos de requisições e respostas para cada endpoint.
+
+5.  Testes Automatizados:
+Aumente a cobertura de testes unitários e de integração.
+Utilize mocks para testar interações com o banco de dados e outras dependências externas.
+
+6.  Logs e Monitoramento:
+Adicione logs detalhados para facilitar a depuração e o monitoramento.
+Utilize ferramentas de monitoramento e alertas para acompanhar a saúde da aplicação.
+
+7.  Configurações e Variáveis de Ambiente:
+Utilize variáveis de ambiente para configurar a aplicação, especialmente para informações sensíveis como credenciais de banco de dados.
+Considere o uso de bibliotecas como viper para gerenciar configurações.
+
+8.  CICD (Continuous Integration and Continuous Deployment):
+Configure pipelines de CI/CD para automatizar testes, builds e deploys.
+Utilize ferramentas como GitHub Actions, Jenkins ou GitLab CI.
+
+9.  Segurança:
+Realize auditorias de segurança para identificar e corrigir vulnerabilidades.
+Utilize práticas recomendadas de segurança, como a sanitização de entradas e a proteção contra ataques de injeção SQL.
+
+10.  Escalabilidade:
+Considere a escalabilidade da aplicação, especialmente se for implantada em ambientes de produção.
+Utilize práticas de design de software que suportem a escalabilidade horizontal e vertical.
+
+11.  Boas Práticas de Código:
+Siga as convenções de código do Go, como as recomendadas pelo golangci-lint.
+Realize revisões de código para garantir a qualidade e a consistência.
