@@ -94,6 +94,9 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou um 
 
 6.  Fazer um CICD Simplificado
 
+7.  Estudar Lambda SAM para melhorar a execucao do projeto
+    https://github.com/aws-samples/sessions-with-aws-sam/tree/master/go-al2
+
 
 ## Sugestao GITHUB Copilot:
 
